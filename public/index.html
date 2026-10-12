@@ -1,72 +1,172 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barbearia Jotapê Cortes</title>
     <style>
-        :root { --primary-color: #d4af37; --bg-dark: #121212; --bg-light: #1e1e1e; --text-light: #f5f5f5; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-light); }
-        section { padding: 3rem 5%; }
-        h1, h2 { color: var(--primary-color); text-align: center; margin-bottom: 2rem; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;}
-        .service-card { background-color: var(--bg-light); padding: 2rem; border-radius: 8px; text-align: center; border: 1px solid #333; }
-        .booking-container { max-width: 600px; margin: 0 auto; background-color: var(--bg-light); padding: 2rem; border-radius: 8px; }
+        :root {
+            --primary-color: #d4af37;
+            --bg-dark: #121212;
+            --bg-light: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body { background-color: var(--bg-dark); color: var(--text-light); line-height: 1.6; }
+
+        /* Navegação */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background-color: rgba(18, 18, 18, 0.95);
+            padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; border-bottom: 1px solid #333;
+        }
+        .logo { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; }
+        .nav-links { list-style: none; display: flex; gap: 2rem; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        /* Hero Section */
+        #home {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            padding: 0 20px;
+        }
+        #home h1 { font-size: 4rem; margin-bottom: 1rem; color: var(--primary-color); }
+        #home p { font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; }
+        .btn {
+            padding: 12px 30px; background-color: var(--primary-color); color: var(--bg-dark); border: none;
+            border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer; text-decoration: none; transition: var(--transition); display: inline-block;
+        }
+        .btn:hover { background-color: #b5952f; transform: translateY(-2px); }
+
+        /* Secções Comuns */
+        section { padding: 5rem 5%; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--primary-color); }
+
+        /* Serviços */
+        #servicos { background-color: var(--bg-light); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .service-card {
+            background-color: var(--bg-dark); padding: 2rem; border-radius: 8px; text-align: center;
+            border: 1px solid #333; transition: var(--transition);
+        }
+        .service-card:hover { border-color: var(--primary-color); transform: translateY(-5px); }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .service-price { font-size: 1.2rem; color: var(--primary-color); font-weight: bold; }
+
+        /* Agendamento */
+        .booking-container {
+            max-width: 800px; margin: 0 auto; background-color: var(--bg-light); padding: 3rem;
+            border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
         .form-group { margin-bottom: 1.5rem; }
-        .form-control { width: 100%; padding: 10px; background: var(--bg-dark); border: 1px solid #444; color: white; border-radius: 4px; }
-        .btn { width: 100%; padding: 12px; background: var(--primary-color); border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-control {
+            width: 100%; padding: 12px; background-color: var(--bg-dark); border: 1px solid #444;
+            color: var(--text-light); border-radius: 5px; font-size: 1rem;
+        }
+        .form-control:focus { outline: none; border-color: var(--primary-color); }
+
+        footer { background-color: #0a0a0a; text-align: center; padding: 2rem; border-top: 1px solid #333; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            #home h1 { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
 
+    <nav>
+        <div class="logo">Jotapê Cortes</div>
+        <ul class="nav-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#agendamento">Agendar</a></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <h1>Estilo & Tradição</h1>
+        <p>A melhor experiência em barbearia clássica e moderna. Agende o seu horário e descubra o seu melhor visual.</p>
+        <a href="#agendamento" class="btn">Agendar Agora</a>
+    </section>
+
     <section id="servicos">
-        <h2>Nossos Serviços</h2>
-        <div class="services-grid" id="servicesGrid">Carregando serviços...</div>
+        <h2 class="section-title">Nossos Serviços</h2>
+        <div class="services-grid" id="servicesGrid">
+            <!-- Preenchido via JavaScript -->
+        </div>
     </section>
 
     <section id="agendamento">
-        <h2>Agende seu Horário</h2>
+        <h2 class="section-title">Agende o seu Horário</h2>
         <div class="booking-container">
             <form id="bookingForm">
                 <div class="form-group">
-                    <label>Nome Completo</label>
-                    <input type="text" id="nome" class="form-control" required>
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" class="form-control" required placeholder="Digite o seu nome">
                 </div>
                 <div class="form-group">
-                    <label>Serviço</label>
-                    <select id="servico" class="form-control" required></select>
+                    <label for="servico">Serviço Desejado</label>
+                    <select id="servico" class="form-control" required>
+                        <option value="">A carregar serviços...</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label>Data</label>
+                    <label for="data">Data</label>
                     <input type="date" id="data" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Horário</label>
+                    <label for="hora">Horário</label>
                     <select id="hora" class="form-control" required>
                         <option value="">Selecione uma data primeiro</option>
                     </select>
                 </div>
-                <button type="submit" class="btn">Confirmar Agendamento</button>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Confirmar Agendamento</button>
             </form>
         </div>
     </section>
+
+    <footer>
+        <p>&copy; 2026 Barbearia Jotapê Cortes. Todos os direitos reservados.</p>
+    </footer>
 
     <script>
         const API_URL = '/api';
 
         async function carregarServicos() {
-            const res = await fetch(`${API_URL}/servicos`);
-            const servicos = await res.json();
-            const grid = document.getElementById('servicesGrid');
-            const select = document.getElementById('servico');
-            grid.innerHTML = '';
-            select.innerHTML = '<option value="">Selecione...</option>';
+            try {
+                const res = await fetch(`${API_URL}/servicos`);
+                const servicos = await res.json();
+                const grid = document.getElementById('servicesGrid');
+                const select = document.getElementById('servico');
+                grid.innerHTML = '';
+                select.innerHTML = '<option value="">Selecione um serviço</option>';
 
-            servicos.forEach(s => {
-                grid.innerHTML += `<div class="service-card"><h3>${s.nome}</h3><p>R$ ${s.preco.toFixed(2)}</p></div>`;
-                select.innerHTML += `<option value="${s.id}">${s.nome}</option>`;
-            });
+                servicos.forEach(s => {
+                    grid.innerHTML += `
+                        <div class="service-card">
+                            <h3>${s.nome}</h3>
+                            <div class="service-price">R$ ${s.preco.toFixed(2)}</div>
+                        </div>
+                    `;
+                    select.innerHTML += `<option value="${s.id}">${s.nome}</option>`;
+                });
+            } catch (error) {
+                console.error('Erro ao carregar serviços:', error);
+            }
         }
 
         document.getElementById('data').addEventListener('change', async (e) => {
@@ -96,11 +196,10 @@
                 e.target.reset();
                 document.getElementById('hora').innerHTML = '<option value="">Selecione uma data primeiro</option>';
             } else {
-                alert('Erro ao agendar. Tente outro horário.');
+                alert('Erro: Horário já não está disponível.');
             }
         });
 
-        // Configura data mínima e inicia
         document.getElementById('data').min = new Date().toISOString().split('T')[0];
         carregarServicos();
     </script>
