@@ -93,7 +93,7 @@
 
         // Carregar Agendamentos
         async function carregarAgendamentos() {
-            const res = await fetch(`${API_URL}/agendamentos`);
+            const res = await fetch(`${API_URL}/agendamentos?v=${new Date().getTime()}`);
             const agendamentos = await res.json();
             const tbody = document.getElementById('lista-agendamentos');
             tbody.innerHTML = '';
