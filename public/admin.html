@@ -3,170 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Gestão - Jotapê Cortes</title>
+    <title>Painel - Jotapê</title>
     <style>
-        :root {
-            --primary-color: #d4af37;
-            --bg-dark: #121212;
-            --bg-light: #1e1e1e;
-            --text-light: #f5f5f5;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        :root { --primary-color: #d4af37; --bg-dark: #121212; --bg-light: #1e1e1e; --text-light: #f5f5f5; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-light); padding: 2rem; }
-        h1, h2 { color: var(--primary-color); margin-bottom: 1rem; }
-        .container { max-width: 1000px; margin: 0 auto; display: grid; gap: 2rem; }
-        .card { background-color: var(--bg-light); padding: 2rem; border-radius: 8px; border: 1px solid #333; }
-        
-        /* Tabelas e Listas */
+        .container { max-width: 900px; margin: 0 auto; display: grid; gap: 2rem; }
+        .card { background: var(--bg-light); padding: 2rem; border-radius: 8px; border: 1px solid #333; }
         table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #333; }
         th { color: var(--primary-color); }
-        .btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .btn-danger { background-color: #ff4444; color: white; }
-        .btn-success { background-color: #00C851; color: white; margin-top: 10px; }
-        
-        /* Formulário */
-        .form-group { margin-bottom: 1rem; }
-        input { width: 100%; padding: 8px; background: var(--bg-dark); border: 1px solid #444; color: white; border-radius: 4px;}
+        .btn { padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; color: white; }
+        .btn-danger { background: #ff4444; }
+        .btn-success { background: #00C851; margin-top: 10px; }
+        input { width: 100%; padding: 8px; background: var(--bg-dark); border: 1px solid #444; color: white; }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>Painel do Gestor</h1>
-
-        <!-- Seção de Agendamentos -->
         <div class="card">
-            <h2>Agendamentos Ativos</h2>
+            <h2>Agendamentos Ativos <button onclick="carregarAgendamentos()" style="margin-left:15px; cursor:pointer;">🔄 Atualizar</button></h2>
             <table>
-                <thead>
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Data</th>
-                        <th>Hora</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody id="lista-agendamentos">
-                    <!-- Preenchido via JS -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Seção de Serviços -->
-        <div class="card">
-            <h2>Gerenciar Serviços</h2>
-            
-            <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #333;">
-                <h3>Adicionar Novo Serviço</h3>
-                <form id="form-servico">
-                    <div class="form-group">
-                        <label>Nome do Serviço</label>
-                        <input type="text" id="novo-nome" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Preço (R$)</label>
-                        <input type="number" id="novo-preco" step="0.01" required>
-                    </div>
-                    <button type="submit" class="btn btn-success">Salvar Serviço</button>
-                </form>
-            </div>
-
-            <h3>Serviços Cadastrados</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Serviço</th>
-                        <th>Preço</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody id="lista-servicos">
-                    <!-- Preenchido via JS -->
-                </tbody>
+                <thead><tr><th>Cliente</th><th>Data</th><th>Hora</th><th>Ação</th></tr></thead>
+                <tbody id="lista-agendamentos"></tbody>
             </table>
         </div>
     </div>
 
     <script>
-        const API_URL = 'const API_URL = '/api;
+        const API_URL = '/api';
 
-        // Carregar Agendamentos
         async function carregarAgendamentos() {
-            const res = await fetch(`${API_URL}/agendamentos?v=${new Date().getTime()}`);
-            const agendamentos = await res.json();
-            const tbody = document.getElementById('lista-agendamentos');
-            tbody.innerHTML = '';
-
-            agendamentos.forEach(ag => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${ag.nome}</td>
-                        <td>${ag.data.split('-').reverse().join('/')}</td>
-                        <td>${ag.hora}</td>
-                        <td>
-                            <button class="btn btn-danger" onclick="cancelarAgendamento(${ag.id})">Cancelar</button>
-                        </td>
-                    </tr>
-                `;
-            });
+            try {
+                // Adicionado ?v= para impedir cache do navegador
+                const res = await fetch(`${API_URL}/agendamentos?v=${new Date().getTime()}`);
+                const agendamentos = await res.json();
+                const tbody = document.getElementById('lista-agendamentos');
+                tbody.innerHTML = '';
+                agendamentos.forEach(ag => {
+                    const dataFormatada = ag.data ? ag.data.split('-').reverse().join('/') : 'Erro na data';
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${ag.nome}</td>
+                            <td>${dataFormatada}</td>
+                            <td>${ag.hora}</td>
+                            <td><button class="btn btn-danger" onclick="cancelarAgendamento(${ag.id})">Cancelar</button></td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.error("Erro ao carregar:", error);
+            }
         }
 
-        // Cancelar Agendamento
         async function cancelarAgendamento(id) {
-            if(confirm('Tem certeza que deseja cancelar este agendamento?')) {
+            if(confirm('Cancelar agendamento?')) {
                 await fetch(`${API_URL}/agendamentos/${id}`, { method: 'DELETE' });
                 carregarAgendamentos();
             }
         }
 
-        // Carregar Serviços
-        async function carregarServicos() {
-            const res = await fetch(`${API_URL}/servicos`);
-            const servicos = await res.json();
-            const tbody = document.getElementById('lista-servicos');
-            tbody.innerHTML = '';
-
-            servicos.forEach(servico => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${servico.nome}</td>
-                        <td>R$ ${parseFloat(servico.preco).toFixed(2)}</td>
-                        <td>
-                            <button class="btn btn-danger" onclick="removerServico(${servico.id})">Remover</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        // Adicionar Serviço
-        document.getElementById('form-servico').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const nome = document.getElementById('novo-nome').value;
-            const preco = parseFloat(document.getElementById('novo-preco').value);
-
-            await fetch(`${API_URL}/servicos`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nome, preco })
-            });
-
-            document.getElementById('form-servico').reset();
-            carregarServicos();
-        });
-
-        // Remover Serviço
-        async function removerServico(id) {
-            if(confirm('Remover este serviço do site?')) {
-                await fetch(`${API_URL}/servicos/${id}`, { method: 'DELETE' });
-                carregarServicos();
-            }
-        }
-
-        // Inicializar
         carregarAgendamentos();
-        carregarServicos();
     </script>
 </body>
 </html>
