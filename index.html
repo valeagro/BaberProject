@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Jotapê Cortes</title>
+    <style>
+        /* Variáveis de Cores e Reset */
+        :root {
+            --primary-color: #d4af37; /* Dourado */
+            --bg-dark: #121212;
+            --bg-light: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Navegação */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(18, 18, 18, 0.95);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Seção Hero */
+        #home {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            padding: 0 20px;
+        }
+
+        #home h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        #home p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: #b5952f;
+            transform: translateY(-2px);
+        }
+
+        /* Seções Gerais */
+        section {
+            padding: 5rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        /* Serviços */
+        #servicos {
+            background-color: var(--bg-light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--bg-dark);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-price {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        /* Agendamento */
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-dark);
+            border: 1px solid #444;
+            color: var(--text-light);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .integration-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #333;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Em um projeto real, adicionar menu hambúrguer */
+            }
+            #home h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho / Navegação -->
+    <nav>
+        <div class="logo">Jotapê Cortes</div>
+        <ul class="nav-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#agendamento">Agendar</a></li>
+        </ul>
+    </nav>
+
+    <!-- Seção Hero -->
+    <section id="home">
+        <h1>Estilo & Tradição</h1>
+        <p>A melhor experiência em barbearia clássica e moderna. Agende seu horário e descubra o seu melhor visual.</p>
+        <a href="#agendamento" class="btn">Agendar Agora</a>
+    </section>
+
+    <!-- Seção de Serviços -->
+    <section id="servicos">
+        <h2 class="section-title">Nossos Serviços</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Corte Clássico</h3>
+                <p>Corte na tesoura ou máquina com acabamento impecável.</p>
+                <div class="service-price">R$ 45,00</div>
+            </div>
+            <div class="service-card">
+                <h3>Barba Terapia</h3>
+                <p>Alinhamento, toalha quente e produtos premium.</p>
+                <div class="service-price">R$ 35,00</div>
+            </div>
+            <div class="service-card">
+                <h3>Combo (Corte + Barba)</h3>
+                <p>O pacote completo para renovar o seu estilo.</p>
+                <div class="service-price">R$ 70,00</div>
+            </div>
+            <div class="service-card">
+                <h3>Sobrancelha</h3>
+                <p>Limpeza e alinhamento na navalha.</p>
+                <div class="service-price">R$ 15,00</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Agendamento -->
+    <section id="agendamento">
+        <h2 class="section-title">Agende seu Horário</h2>
+        <div class="booking-container">
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" class="form-control" required placeholder="Digite seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="servico">Serviço Desejado</label>
+                    <select id="servico" class="form-control" required>
+                        <option value="">Selecione um serviço</option>
+                        <option value="corte">Corte Clássico</option>
+                        <option value="barba">Barba Terapia</option>
+                        <option value="combo">Combo (Corte + Barba)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="data">Data</label>
+                    <input type="date" id="data" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="hora">Horário</label>
+                    <select id="hora" class="form-control" required></select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Confirmar Agendamento</button>
+            </form>
+            
+            <p class="integration-note">
+                * Para integração completa com o aplicativo AppBarber, o botão acima pode ser configurado para redirecionar diretamente para o seu link de agendamento do app.
+            </p>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2026 Barbearia Jotapê Cortes. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Script de Interatividade -->
+    <script>
+    const API_URL = '/api';
+
+    // Carrega serviços dinamicamente ao abrir a página
+    async function carregarServicos() {
+        const response = await fetch(`${API_URL}/servicos`);
+        const servicos = await response.json();
+        
+        const grid = document.querySelector('.services-grid');
+        const select = document.getElementById('servico');
+        
+        grid.innerHTML = ''; // Limpa a grade atual
+        select.innerHTML = '<option value="">Selecione um serviço</option>';
+
+        servicos.forEach(servico => {
+            // Renderiza na tela
+            grid.innerHTML += `
+                <div class="service-card">
+                    <h3>${servico.nome}</h3>
+                    <div class="service-price">R$ ${servico.preco.toFixed(2)}</div>
+                </div>
+            `;
+            // Adiciona no formulário de agendamento
+            select.innerHTML += `<option value="${servico.id}">${servico.nome}</option>`;
+        });
+    }
+
+    // Busca horários disponíveis quando o cliente escolhe a data
+    document.getElementById('data').addEventListener('change', async (e) => {
+        const dataEscolhida = e.target.value;
+        const response = await fetch(`${API_URL}/horarios-disponiveis?data=${dataEscolhida}`);
+        const horarios = await response.json();
+        
+        const horaSelect = document.getElementById('hora'); // Mude o input 'time' para 'select' no HTML
+        horaSelect.innerHTML = '<option value="">Selecione o horário</option>';
+        
+        horarios.forEach(h => {
+            horaSelect.innerHTML += `<option value="${h}">${h}</option>`;
+        });
+    });
+
+    // Envia o agendamento
+    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const dados = {
+            nome: document.getElementById('nome').value,
+            servicoId: document.getElementById('servico').value,
+            data: document.getElementById('data').value,
+            hora: document.getElementById('hora').value
+        };
+
+        const response = await fetch(`${API_URL}/agendamentos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        });
+
+        if (response.ok) {
+            alert('Agendamento confirmado com sucesso!');
+            this.reset();
+        } else {
+            alert('Erro: Horário não está mais disponível.');
+        }
+    });
+
+    // Inicia a aplicação
+    carregarServicos();
+</script>
+</body>
+</html>
