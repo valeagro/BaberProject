@@ -15,7 +15,7 @@ let agendamentos = [];
 const horariosTrabalho = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'];
 
 // Servir os arquivos HTML da pasta raiz
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Rotas de Serviços
 app.get('/api/servicos', (req, res) => res.json(servicos));
